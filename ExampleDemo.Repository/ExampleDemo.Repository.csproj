@@ -49,9 +49,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Common\GenericRepository.cs" />
     <Compile Include="Common\IGenericRepository.cs" />
+    <Compile Include="Common\IUnitOfWork.cs" />
+    <Compile Include="Common\UnitOfWork.cs" />
+    <Compile Include="CountryRepository.cs" />
     <Compile Include="ICountryRepository.cs" />
     <Compile Include="IPersonRepository.cs" />
     <Compile Include="PersonRepository.cs" />
