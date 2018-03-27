@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ExampleDemo.Model
+namespace ExampleDemo.Model.Common
 {
-    public class Class1
+    public interface IEntity<T>
     {
+        T Id { get; set; }
     }
 }
