@@ -51,6 +51,11 @@
   <ItemGroup>
     <Compile Include="ExampleDemoDbContext.cs" />
     <Compile Include="Country.cs" />
+    <Compile Include="Migrations\201803271229051_InitialDatabase.cs" />
+    <Compile Include="Migrations\201803271229051_InitialDatabase.Designer.cs">
+      <DependentUpon>201803271229051_InitialDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Common\AuditableEntity.cs" />
     <Compile Include="Common\BaseEntity.cs" />
@@ -62,6 +67,11 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201803271229051_InitialDatabase.resx">
+      <DependentUpon>201803271229051_InitialDatabase.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
