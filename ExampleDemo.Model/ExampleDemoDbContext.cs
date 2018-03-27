@@ -2,8 +2,9 @@
 using System.Data.Entity;
 using System.Linq;
 using System.Threading;
+using ExampleDemo.Model.Common;
 
-namespace ExampleDemo.Model.Common
+namespace ExampleDemo.Model
 {
     public class ExampleDemoDbContext : DbContext
     {
