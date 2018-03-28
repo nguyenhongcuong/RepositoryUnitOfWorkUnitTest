@@ -1,7 +1,5 @@
 ﻿using System.Web.Mvc;
 using ExampleDemo.Model;
-using ExampleDemo.Repository;
-using ExampleDemo.Repository.Common;
 using ExampleDemo.Service;
 
 namespace ExampleDemo.Web.Controllers
@@ -9,16 +7,17 @@ namespace ExampleDemo.Web.Controllers
     public class CountryController : Controller
     {
         private ICountryService _countryService;
-        private IUnitOfWork _unitOfWork;
-        private ICountryRepository _countryRepository;
-        private ExampleDemoDbContext _context;
+        //private IUnitOfWork _unitOfWork;
+        //private ICountryRepository _countryRepository;
+        //private ExampleDemoDbContext _context;
 
-        public CountryController()
+        public CountryController(ICountryService countryService)
         {
-            _context = new ExampleDemoDbContext();
-            _unitOfWork = new UnitOfWork(_context);
-            _countryRepository = new CountryRepository(_context);
-            _countryService = new CountryService(_unitOfWork, _countryRepository);
+            //_context = new ExampleDemoDbContext();
+            //_unitOfWork = new UnitOfWork(_context);
+            //_countryRepository = new CountryRepository(_context);
+            //_countryService = new CountryService(_unitOfWork, _countryRepository);
+            _countryService = countryService;
         }
         // GET: Country
         public ActionResult Index()
@@ -28,9 +27,14 @@ namespace ExampleDemo.Web.Controllers
         }
 
         // GET: Country/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
-            return View();
+            var country = _countryService.GetById(id);
+            if (country == null)
+            {
+                return HttpNotFound();
+            }
+            return View(country);
         }
 
         // GET: Country/Create
@@ -41,62 +45,61 @@ namespace ExampleDemo.Web.Controllers
 
         // POST: Country/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(Country country)
         {
-            try
+            // TODO: Add insert logic here
+            if (ModelState.IsValid)
             {
-                // TODO: Add insert logic here
-
+                _countryService.Create(country);
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            return View(country);
         }
 
         // GET: Country/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
-            return View();
+            var country = _countryService.GetById(id);
+            if (country == null)
+            {
+                return HttpNotFound();
+            }
+            return View(country);
         }
 
         // POST: Country/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Country country)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
-
+                _countryService.Update(country);
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            return View(country);
         }
 
         // GET: Country/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var country = _countryService.GetById(id);
+            if (country == null)
+            {
+                return HttpNotFound();
+            }
+            return View(country);
         }
 
         // POST: Country/Delete/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, FormCollection collection)
         {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            var country = _countryService.GetById(id);
+            _countryService.Delete(country);
+            return RedirectToAction("Index");
         }
     }
 }
